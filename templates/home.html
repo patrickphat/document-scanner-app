@@ -1,0 +1,25 @@
+<head>
+  <link href="{{ url_for('static',filename='css/button.css') }}" rel="stylesheet" type="text/css">
+  <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet" type="text/css">
+
+  <script src="{{ url_for('static',filename='js/button.js') }}"></script>
+  <script src="{{ url_for('static',filename='js/instantsubmit.js') }}"></script>
+
+
+</head>
+
+<body>
+  <center>
+
+    <div class="row">
+     <img src="{{ url_for('static',filename='images/logo.jpg') }}">
+    </div>
+    <form method=post enctype=multipart/form-data> 
+        <input type=file name=file /><br><br>
+        <button type=submit class='large red button'>Upload</button>
+
+
+      </form>
+</center>
+
+</body>
