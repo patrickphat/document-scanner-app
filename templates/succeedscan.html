@@ -1,0 +1,5 @@
+{% extends "home.html" %}
+{% block body %}
+<center> <p style="color:green"><b>Scan successfully! Here is your scanned document</b><br></p> </center>
+<center><img src="{{ url_for('static',filename='images/output.jpg') }}" max-with=300></center>
+{% endblock %}

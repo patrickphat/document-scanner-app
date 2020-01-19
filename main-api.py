@@ -45,8 +45,7 @@ def home():
             file.save(input_file_path)
             if not (scanner(input_file_path)):
                 return render_template("failscan.html")
-            return redirect(url_for('uploaded_file',
-                                    filename=OUTPUT_FILE_NAME))
+            return render_template("succeedscan.html")
     return render_template("home.html")
 
 
