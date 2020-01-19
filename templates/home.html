@@ -10,6 +10,9 @@
 </head>
 
 <body>
+  <!-- <div class="topnav">
+    <img src="{{ url_for('static',filename='images/logo.jpg') }}">
+  </div>  -->
   <center>
 
     <div class="row">
@@ -18,9 +21,11 @@
     <form method=post enctype=multipart/form-data> 
         <input type=file name=file /><br><br>
         <button type=submit class='large red button'>Upload</button>
-
+    
 
       </form>
-</center>
+      <a href="{{ url_for("examples") }}"><button  class='large green button'>See examples</button></a>
 
+</center>
+{% block body %}{% endblock %}
 </body>

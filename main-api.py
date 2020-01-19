@@ -12,6 +12,15 @@ OUTPUT_FILE_NAME = "output.jpg"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'super secret key'
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+# No caching at all for API endpoints.
+@app.after_request
+def add_header(response):
+    # response.cache_control.no_store = True
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '-1'
+    return response
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -35,12 +44,15 @@ def home():
             input_file_path = os.path.join(app.config['UPLOAD_FOLDER'], INPUT_FILE_NAME)
             file.save(input_file_path)
             if not (scanner(input_file_path)):
-                return render_template("home.html")
+                return render_template("failscan.html")
             return redirect(url_for('uploaded_file',
                                     filename=OUTPUT_FILE_NAME))
     return render_template("home.html")
 
 
+@app.route('/examples')
+def examples():
+    return render_template("examples.html")
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):

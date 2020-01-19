@@ -1,0 +1,26 @@
+<head>
+    <span style="font-family:Arial">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">  <link href="{{ url_for('static',filename='css/button.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet" type="text/css">
+  
+    <script src="{{ url_for('static',filename='js/button.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/instantsubmit.js') }}"></script>
+  
+  
+  </head>
+  
+  <body>
+    <center>
+
+      <div class="row">
+       <img src="{{ url_for('static',filename='images/logo.jpg') }}"><br>
+       <center><a href="{{ url_for('home') }}"><button  class='large red button'>Back</button></a></center>
+
+       <img src= {{ url_for('static',filename='images/examples.jpg') }}
+
+      </div>
+      <center><a href="{{ url_for('home') }}"><button  class='large red button'>Back</button></a></center>
+
+      </a>
+  </center>
+  </body>

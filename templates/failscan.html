@@ -1,0 +1,16 @@
+{% extends "home.html" %}
+{% block body %}
+<center> <p style="color:red"><b>Warning: Failed to scan the images, make sure:</b><br>
+    <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+        .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+        .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+        </style>
+        <table class="tg">
+          <tr>
+            <th class="tg-0pky"><span style="font-weight:normal">1. have monotonically dark background and should not be clutter</span><br><span style="font-weight:normal">2. paper should have light color (white, yellow, aqua, etc.)</span><br><span style="font-weight:normal">3. only one paper is in the image</span><br><span style="font-weight:normal">4. the paper should be shown with all 4 corners revealed</span></th>
+          </tr>
+        </table></p> </center>
+<center><img src="{{ url_for('static',filename='images/visualize.jpg') }}" max-with=300></center>
+{% endblock %}
