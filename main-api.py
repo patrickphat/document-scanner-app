@@ -2,7 +2,7 @@ from flask import Flask,render_template, request, flash, request, redirect, url_
 import os
 from flask_scss import Scss
 from werkzeug.utils import secure_filename
-
+from scan import scanner
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/images'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -32,8 +32,10 @@ def home():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], INPUT_FILE_NAME))
-            os.system("python scan.py -i static/images/input.jpg")
+            input_file_path = os.path.join(app.config['UPLOAD_FOLDER'], INPUT_FILE_NAME)
+            file.save(input_file_path)
+            if not (scanner(input_file_path)):
+                return render_template("home.html")
             return redirect(url_for('uploaded_file',
                                     filename=OUTPUT_FILE_NAME))
     return render_template("home.html")
