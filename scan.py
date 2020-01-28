@@ -1,19 +1,11 @@
-# USAGE
-# python scan.py --image images/page.jpg
-
-# import the necessary packages
-from pyimagesearch.transform import four_point_transform
+from cv_toolbox.transform import four_point_transform
 from skimage.filters import threshold_local
 import numpy as np
 import argparse
 import cv2
 import imutils
 
-# construct the argument parser and parse the arguments
-# ap = argparse.ArgumentParser()
-# ap.add_argument("-i", "--image", required = True,
-# 	help = "Path to the image to be scanned")
-# args = vars(ap.parse_args())
+
 def scanner(image_path):
 	# load the image and compute the ratio of the old height
 	# to the new height, clone it, and resize it
@@ -22,18 +14,14 @@ def scanner(image_path):
 	orig = image.copy()
 	image = imutils.resize(image, height = 500)
 
-	# convert the image to grayscale, blur it, and find edges
-	# in the image
+	# convert the image to grayscale
 	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+	# apply guassian blur
 	gray = cv2.GaussianBlur(gray, (5, 5), 0)
+	# Canny edge detection
 	edged = cv2.Canny(gray, 75, 200)
-	cv2.imwrite('static/images/visualize.jpg', edged) 
-	# show the original image and the edge detected image
-	print("STEP 1: Edge Detection")
-	# cv2.imshow("Image", image)
-	# cv2.imshow("Edged", edged)
-	# cv2.waitKey(0)
-	# cv2.destroyAllWindows()
+	 # Save to visualize the edge detection
+	cv2.imwrite('static/images/visualize.jpg', edged)
 
 	# find the contours in the edged image, keeping only the
 	# largest ones, and initialize the screen contour
@@ -55,12 +43,6 @@ def scanner(image_path):
 		else:
 			return 0
 
-
-	# show the contour (outline) of the piece of paper
-	print("STEP 2: Find contours of paper")
-	# cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
-	# cv2.imshow("Outline", image)
-
 	# apply the four point transform to obtain a top-down
 	# view of the original image
 	warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
@@ -71,11 +53,5 @@ def scanner(image_path):
 	T = threshold_local(warped, 11, offset = 10, method = "gaussian")
 	warped = (warped > T).astype("uint8") * 255
 
-	# show the original and scanned images
-	print("STEP 3: Apply perspective transform")
-	# cv2.imshow("Original",orig)
-	# #imutils.resize(orig, height = 650))
-	# cv2.imshow("Scanned", warped)#imutils.resize(warped, height = 650))
-	# cv2.waitKey(0)
 	cv2.imwrite('static/images/output.jpg', warped) 
 	return 1
